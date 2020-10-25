@@ -1,5 +1,8 @@
 package com.github.amkaras.flights.discovery.ui.presenter;
 
+import com.github.amkaras.flights.discovery.dao.CitiesDao;
+import com.github.amkaras.flights.discovery.model.FlightDetails;
+import com.github.amkaras.flights.discovery.service.FlightDetailsDiscoveryService;
 import com.github.amkaras.flights.discovery.ui.view.CheapestFlightsView;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -8,13 +11,20 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.theme.material.Material;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Set;
 
 @Route("cheapest-flights")
 @PageTitle("Cheapest flights")
 @Theme(value = Material.class, variant = Lumo.LIGHT)
 public class CheapestFlightsPresenter extends CanonicalPresenter<CheapestFlightsView> {
 
-    public CheapestFlightsPresenter() {
+    private final CitiesDao citiesDao;
+    private final FlightDetailsDiscoveryService flightDetailsDiscoveryService;
+
+    public CheapestFlightsPresenter(CitiesDao citiesDao, FlightDetailsDiscoveryService flightDetailsDiscoveryService) {
+        this.citiesDao = citiesDao;
+        this.flightDetailsDiscoveryService = flightDetailsDiscoveryService;
     }
 
     @Override
@@ -22,8 +32,16 @@ public class CheapestFlightsPresenter extends CanonicalPresenter<CheapestFlights
     }
 
     @PostConstruct
-    private void initViewListeners() {
-        view.initListeners();
-        refresh();
+    private void initView() {
+        Set<String> cities = citiesDao.findAll();
+        getView().setOrigins(cities);
+        getView().setDestinations(cities);
+        getView().initListeners(e -> onSearch());
+    }
+
+    private void onSearch() {
+        List<FlightDetails> details = flightDetailsDiscoveryService.getCheapestDetails(
+                getView().getOrigin(), getView().getDestination(), getView().getFrom(), getView().getTo());
+        getView().setFlightDetails(details);
     }
 }

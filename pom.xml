@@ -12,7 +12,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <vaadin.version>15.0.2</vaadin.version>
+        <vaadin.version>17.0.7</vaadin.version>
         <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
         <vaadin.productionMode>true</vaadin.productionMode>
     </properties>
@@ -58,6 +58,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
                 <executions>
                     <execution>
                         <goals>

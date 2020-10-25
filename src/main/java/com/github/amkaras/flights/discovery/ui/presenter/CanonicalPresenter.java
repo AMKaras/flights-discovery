@@ -30,4 +30,8 @@ public class CanonicalPresenter<V extends Component> extends Main {
 
     protected void refresh() {
     }
+
+    protected V getView() {
+        return this.view;
+    }
 }
