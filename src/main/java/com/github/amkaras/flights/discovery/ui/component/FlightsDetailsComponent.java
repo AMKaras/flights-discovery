@@ -19,15 +19,18 @@ public class FlightsDetailsComponent extends Grid<FlightDetails> {
                 .setHeader("Origin").setAutoWidth(true).setSortable(true);
         this.addColumn(FlightDetails::getDestination)
                 .setHeader("Destination").setAutoWidth(true).setSortable(true);
-        this.addColumn(flightDetails -> flightDetails.getDeparture().format(minutesPrecisionFormatter))
+        this.addColumn(flightDetails -> flightDetails.getDeparture() == null ? null :
+                flightDetails.getDeparture().format(minutesPrecisionFormatter))
                 .setHeader("Departure").setAutoWidth(true).setSortable(true);
-        this.addColumn(flightDetails -> flightDetails.getArrival().format(minutesPrecisionFormatter))
+        this.addColumn(flightDetails -> flightDetails.getArrival() == null ? null :
+                flightDetails.getArrival().format(minutesPrecisionFormatter))
                 .setHeader("Arrival").setAutoWidth(true).setSortable(true);
         this.addColumn(FlightDetails::getPrice)
                 .setHeader("Price").setAutoWidth(true).setSortable(true);
         this.addColumn(FlightDetails::getCurrency)
                 .setHeader("Currency").setAutoWidth(true).setSortable(true);
-        this.addColumn(flightDetails -> flightDetails.getDateChecked().format(secondsPrecisionFormatter))
+        this.addColumn(flightDetails -> flightDetails.getDateChecked() == null ? null :
+                flightDetails.getDateChecked().format(secondsPrecisionFormatter))
                 .setHeader("Date checked").setAutoWidth(true).setSortable(true);
         this.addThemeVariants(GridVariant.MATERIAL_COLUMN_DIVIDERS);
     }
